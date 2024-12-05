@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import Navbar from "@/components/Navbar";
+import ReactQueryProvider from "./providers";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -26,9 +28,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-gray-900 antialiased`}
       >
-        {children}
+        <ReactQueryProvider>
+          <div className="min-h-screen flex flex-col">
+            <Navbar />
+            <main className="flex-grow">{children}</main>
+            <footer className="bg-lightDark p-4 text-center text-sm">
+              © {new Date().getFullYear()} Netflix Like - Tous droits réservés.
+            </footer>
+          </div>
+        </ReactQueryProvider>
       </body>
     </html>
   );
