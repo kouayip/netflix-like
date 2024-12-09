@@ -1,12 +1,10 @@
+import React, { Suspense } from "react";
 import Image from "next/image";
-import { fetchMovieDetails, fetchSimilarMovies } from "@/lib/tmdb";
-import { formatReleaseYear } from "@/utils/formatDate";
-import { formatMoney } from "@/utils/formatMoney";
+import { PageProps } from "@/.next/types/app/page";
 import SimilarMovies from "@/components/SimilarMovies";
-import { Suspense } from "react";
 import Container from "@/components/Container";
-import { getImageUrl } from "@/utils/getImageUrl";
-import { PageProps } from "@/.next/types/app/layout";
+import { fetchMovieDetails, fetchSimilarMovies } from "@/lib/tmdb";
+import { formatMoney, formatReleaseYear, getImageUrl } from "@/lib/utils";
 
 const MovieDetails = async ({ params }: PageProps) => {
   const { id } = await params;

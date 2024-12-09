@@ -1,5 +1,6 @@
 "use client";
 
+import { useDebounce } from "@/hooks/useDebounce";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { FC, useState, useEffect } from "react";
 
@@ -20,22 +21,14 @@ const SearchBar: FC<SearchBarProps> = ({ autoFocus }) => {
 
   const initialQuery = searchParams.get("query") || "";
   const [searchValue, setSearchValue] = useState(initialQuery);
-  const [debouncedValue, setDebouncedValue] = useState(initialQuery);
   const [shouldAutoFocus, setShouldAutoFocus] = useState(autoFocus);
+
+  const debouncedValue = useDebounce(searchValue, 300);
 
   // Désactiver autoFocus après le premier rendu
   useEffect(() => {
     setShouldAutoFocus(false);
   }, []);
-
-  // Debouncing : mettre à jour debouncedValue après 500ms
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(searchValue);
-    }, 300);
-
-    return () => clearTimeout(handler);
-  }, [searchValue]);
 
   // Mettre à jour l'URL uniquement lorsque debouncedValue change
   useEffect(() => {

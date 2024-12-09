@@ -4,9 +4,9 @@ import { forwardRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { Movie } from "@/types/movie";
 import { useRouter } from "next/navigation";
-import { getImageUrl } from "@/utils/getImageUrl";
 import FavoriteButton from "./FavoriteButton";
 import { useFavorites } from "@/store/useFavorites";
+import { getImageUrl } from "@/lib/utils";
 
 type MovieCardProps = Movie & {};
 
