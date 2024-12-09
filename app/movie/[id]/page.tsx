@@ -8,7 +8,7 @@ import Container from "@/components/Container";
 import { getImageUrl } from "@/utils/getImageUrl";
 
 const MovieDetails = async ({ params }: { params: { id: string } }) => {
-  const { id } = await params;
+  const { id } = params;
 
   const [
     {
