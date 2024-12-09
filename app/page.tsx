@@ -1,10 +1,11 @@
-import React, { Suspense } from "react";
-import { getMovies, searchMovies } from "@/lib/tmdb";
-import { MovieAPIResponse } from "@/types/movie";
-import SearchBar from "@/components/SearchBar";
-import PopularMovies from "@/components/PopularMovies";
-import SearchMovies from "@/components/SearchMovies";
-import Container from "@/components/Container";
+import React, { Suspense } from 'react';
+
+import Container from '@/components/Container';
+import PopularMovies from '@/components/PopularMovies';
+import SearchBar from '@/components/SearchBar';
+import SearchMovies from '@/components/SearchMovies';
+import { getMovies, searchMovies } from '@/lib/tmdb';
+import { MovieAPIResponse } from '@/types/movie';
 
 const HomePage = async ({
   searchParams,
@@ -15,7 +16,7 @@ const HomePage = async ({
     category?: string;
   }>;
 }) => {
-  const { query, category = "popular", page: pageStr } = await searchParams;
+  const { query, category = 'popular', page: pageStr } = await searchParams;
   const page = Number(pageStr) || 1;
   let movies: MovieAPIResponse | undefined = undefined;
 

@@ -1,9 +1,11 @@
-"use client";
+'use client';
+import React, { FC, useCallback, useRef } from 'react';
 
-import { FC, useCallback, useRef } from "react";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import MovieCard from "./MovieCard";
-import { MovieAPIResponse } from "@/types/movie";
+import { useInfiniteQuery } from '@tanstack/react-query';
+
+import { MovieAPIResponse } from '@/types/movie';
+
+import MovieCard from './MovieCard';
 
 interface MovieListProps {
   initialMovies: MovieAPIResponse;
@@ -22,31 +24,21 @@ const MovieList: FC<MovieListProps> = ({
 }) => {
   const observer = useRef<IntersectionObserver | null>(null);
 
-  const {
-    data,
-    fetchNextPage,
-    isFetching,
-    hasNextPage,
-    isLoading,
-    error,
-    isFetchingNextPage,
-  } = useInfiniteQuery({
-    queryKey,
-    queryFn: ({ pageParam = 1 }) => fetchMovies(pageParam),
-    getNextPageParam: (lastPage) =>
-      lastPage.page < lastPage.total_pages ? lastPage.page + 1 : undefined,
-    initialPageParam: 1,
-    initialData: {
-      pages: [initialMovies],
-      pageParams: [1],
-    },
-    enabled: enabledFetch,
-  });
+  const { data, fetchNextPage, isFetching, hasNextPage, isLoading, error, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey,
+      queryFn: ({ pageParam = 1 }) => fetchMovies(pageParam),
+      getNextPageParam: (lastPage) =>
+        lastPage.page < lastPage.total_pages ? lastPage.page + 1 : undefined,
+      initialPageParam: 1,
+      initialData: {
+        pages: [initialMovies],
+        pageParams: [1],
+      },
+      enabled: enabledFetch,
+    });
 
-  const isMaxPages = useCallback(
-    () => data && data.pages.length >= maxPages,
-    [data, maxPages]
-  );
+  const isMaxPages = useCallback(() => data && data.pages.length >= maxPages, [data, maxPages]);
 
   const lastElementRef = useCallback(
     (node: HTMLDivElement) => {
@@ -62,7 +54,7 @@ const MovieList: FC<MovieListProps> = ({
 
       if (node) observer.current.observe(node);
     },
-    [fetchNextPage, hasNextPage, isFetching, isLoading, isMaxPages]
+    [fetchNextPage, hasNextPage, isFetching, isLoading, isMaxPages],
   );
 
   if (isLoading) return <p>Chargement...</p>;
@@ -88,9 +80,7 @@ const MovieList: FC<MovieListProps> = ({
         </button>
       )}
       {(isFetching || isFetchingNextPage) && (
-        <div className="text-center text-white col-span-full">
-          Chargement...
-        </div>
+        <div className="text-center text-white col-span-full">Chargement...</div>
       )}
     </div>
   );

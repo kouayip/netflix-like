@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 // T is a generic type for value parameter, our case this will be string
 export const useDebounce = <T>(value: T, delay: number): T => {
@@ -17,7 +17,7 @@ export const useDebounce = <T>(value: T, delay: number): T => {
         clearTimeout(handler);
       };
     },
-    [value, delay] // Only re-call effect if value or delay changes
+    [value, delay], // Only re-call effect if value or delay changes
   );
   return debouncedValue;
 };

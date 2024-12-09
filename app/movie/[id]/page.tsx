@@ -1,16 +1,16 @@
-import React, { Suspense } from "react";
-import Image from "next/image";
-import { PageProps } from "@/.next/types/app/page";
-import SimilarMovies from "@/components/SimilarMovies";
-import Container from "@/components/Container";
-import { fetchMovieDetails, fetchSimilarMovies } from "@/lib/tmdb";
-import { formatMoney, formatReleaseYear, getImageUrl } from "@/lib/utils";
-import { Metadata } from "next";
-import { getMetadata } from "@/lib/seo";
+import React, { Suspense } from 'react';
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+import { Metadata } from 'next';
+import Image from 'next/image';
+
+import { PageProps } from '@/.next/types/app/page';
+import Container from '@/components/Container';
+import SimilarMovies from '@/components/SimilarMovies';
+import { getMetadata } from '@/lib/seo';
+import { fetchMovieDetails, fetchSimilarMovies } from '@/lib/tmdb';
+import { formatMoney, formatReleaseYear, getImageUrl } from '@/lib/utils';
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
   const { title, poster_path, overview } = await fetchMovieDetails(String(id));
 
@@ -33,20 +33,9 @@ const MovieDetails = async ({ params }: PageProps) => {
   const { id } = await params;
 
   const [
-    {
-      title,
-      poster_path,
-      backdrop_path,
-      release_date,
-      overview,
-      budget,
-      revenue,
-    },
+    { title, poster_path, backdrop_path, release_date, overview, budget, revenue },
     initialSimilarMovies,
-  ] = await Promise.all([
-    fetchMovieDetails(String(id)),
-    fetchSimilarMovies(id, 1),
-  ]);
+  ] = await Promise.all([fetchMovieDetails(String(id)), fetchSimilarMovies(id, 1)]);
 
   return (
     <div className="relative flex flex-1 flex-col">
@@ -56,7 +45,7 @@ const MovieDetails = async ({ params }: PageProps) => {
         <div className="overflow-hidden">
           <div className="absolute inset-0 animate-cinematic">
             <Image
-              src={getImageUrl(backdrop_path, "w1280")}
+              src={getImageUrl(backdrop_path, 'w1280')}
               alt={title}
               fill
               className="object-cover opacity-50"
@@ -106,14 +95,8 @@ const MovieDetails = async ({ params }: PageProps) => {
       {/* Films similaires */}
       <Container>
         <div className="pt-6 lg:pt-12 w-full">
-          <h2 className="text-2xl font-bold mb-6 text-white">
-            Films similaires
-          </h2>
-          <Suspense
-            fallback={
-              <p className="text-white">Chargement des films similaires...</p>
-            }
-          >
+          <h2 className="text-2xl font-bold mb-6 text-white">Films similaires</h2>
+          <Suspense fallback={<p className="text-white">Chargement des films similaires...</p>}>
             <SimilarMovies movieId={id} initialMovies={initialSimilarMovies} />
           </Suspense>
         </div>

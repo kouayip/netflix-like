@@ -1,14 +1,15 @@
-"use server";
+'use server';
 
-import axios from "axios";
-import { MovieAPIResponse, MovieDetail } from "@/types/movie";
+import axios from 'axios';
+
+import { MovieAPIResponse, MovieDetail } from '@/types/movie';
 
 // Base URL et clé API
 const api = axios.create({
   baseURL: process.env.TMDB_BASE_URL,
   params: {
     api_key: process.env.TMDB_API_KEY,
-    language: "fr-FR", // Changez la langue si besoin
+    language: 'fr-FR', // Changez la langue si besoin
   },
 });
 
@@ -24,7 +25,7 @@ export const getMovies = async (category: string, page: number) => {
 
 // Récupérer les films populaires
 export const getPopularMovies = async (page: number) => {
-  const response = await api.get("/movie/popular", {
+  const response = await api.get('/movie/popular', {
     params: {
       page: page.toString(),
     },
@@ -50,7 +51,7 @@ export const fetchSimilarMovies = async (id: string, page: number) => {
 
 // Rechercher un film
 export const searchMovies = async (query: string, page: number) => {
-  const response = await api.get<MovieAPIResponse>("/search/movie", {
+  const response = await api.get<MovieAPIResponse>('/search/movie', {
     params: { query, page: page.toString() },
   });
   return response.data;

@@ -8,7 +8,7 @@ export interface Movie {
   poster_path?: string;
   image?: string;
   vote_average?: number;
-  type: "movie" | "tv";
+  type: 'movie' | 'tv';
 }
 
 export interface MovieAPIResponse {

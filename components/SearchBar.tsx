@@ -1,34 +1,27 @@
-"use client";
+'use client';
+import React, { useRef } from 'react';
+import { FC, useState, useEffect } from 'react';
 
-import { useDebounce } from "@/hooks/useDebounce";
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { FC, useState, useEffect } from "react";
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 
-interface SearchBarProps {
-  autoFocus?: boolean;
-}
+import { useDebounce } from '@/hooks/useDebounce';
 
 export function createUrl(pathname: string, searchParams?: URLSearchParams) {
   const searchParamsString = searchParams?.toString();
-  const queryString = searchParamsString ? `?${searchParamsString}` : "";
+  const queryString = searchParamsString ? `?${searchParamsString}` : '';
   return `${pathname}${queryString}`;
 }
 
-const SearchBar: FC<SearchBarProps> = ({ autoFocus }) => {
+const SearchBar: FC = () => {
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const initialQuery = searchParams.get("query") || "";
+  const initialQuery = searchParams.get('query') || '';
   const [searchValue, setSearchValue] = useState(initialQuery);
-  const [shouldAutoFocus, setShouldAutoFocus] = useState(autoFocus);
 
   const debouncedValue = useDebounce(searchValue, 300);
-
-  // Désactiver autoFocus après le premier rendu
-  useEffect(() => {
-    setShouldAutoFocus(false);
-  }, []);
 
   // Mettre à jour l'URL uniquement lorsque debouncedValue change
   useEffect(() => {
@@ -37,21 +30,26 @@ const SearchBar: FC<SearchBarProps> = ({ autoFocus }) => {
     const newSearchParams = new URLSearchParams(searchParams.toString());
 
     if (debouncedValue.trim()) {
-      newSearchParams.set("query", debouncedValue.trim());
+      newSearchParams.set('query', debouncedValue.trim());
     } else {
-      newSearchParams.delete("query");
+      newSearchParams.delete('query');
     }
 
     router.replace(createUrl(pathname, newSearchParams));
   }, [debouncedValue, pathname, router, searchParams, initialQuery]);
 
+  useEffect(() => {
+    // Désactiver autoFocus après le premier rendu
+    if (inputRef.current) inputRef.current.blur();
+  }, []);
+
   return (
     <input
+      ref={inputRef}
       type="search"
       placeholder="Rechercher un film..."
       className="p-2 w-full border rounded mt-4"
       value={searchValue}
-      autoFocus={shouldAutoFocus} // Utiliser l'état local pour autoFocus
       onChange={(e) => setSearchValue(e.target.value)} // Contrôler localement la valeur
     />
   );

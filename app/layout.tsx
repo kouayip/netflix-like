@@ -1,23 +1,28 @@
-import { Viewport } from "next";
-import localFont from "next/font/local";
-import Navbar from "@/components/Navbar";
-import ReactQueryProvider from "./providers";
-import { getMetadata } from "@/lib/seo";
-import "./globals.css";
+import React from 'react';
+
+import { Viewport } from 'next';
+import localFont from 'next/font/local';
+
+import Navbar from '@/components/Navbar';
+import { getMetadata } from '@/lib/seo';
+
+import ReactQueryProvider from './providers';
+
+import './globals.css';
 
 const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+  src: './fonts/GeistVF.woff',
+  variable: '--font-geist-sans',
+  weight: '100 900',
 });
 const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+  src: './fonts/GeistMonoVF.woff',
+  variable: '--font-geist-mono',
+  weight: '100 900',
 });
 
 export const viewport: Viewport = {
-  themeColor: "#111827",
+  themeColor: '#111827',
 };
 
 export const metadata = getMetadata({
@@ -29,9 +34,9 @@ export const metadata = getMetadata({
       index: true,
       follow: true,
       noimageindex: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
   },
 });
@@ -43,9 +48,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-gray-900 antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} bg-gray-900 antialiased`}>
         <ReactQueryProvider>
           <div className="min-h-screen flex flex-col">
             <Navbar />

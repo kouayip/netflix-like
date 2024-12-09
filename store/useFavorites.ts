@@ -1,7 +1,7 @@
-import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
-const STORE_FAVORITES_KEY = "favorites";
+const STORE_FAVORITES_KEY = 'favorites';
 
 type Favorite = {
   id: number;
@@ -56,6 +56,6 @@ export const useFavorites = create<FavoritesState>()(
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true);
       },
-    }
-  )
+    },
+  ),
 );

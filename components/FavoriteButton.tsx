@@ -1,7 +1,8 @@
-import React, { FC } from "react";
-import { cn } from "@/lib/utils";
-import FavoriteBorderIcon from "@/public/favorite_border.svg";
-import FavoriteIcon from "@/public/favorite.svg";
+import React, { FC } from 'react';
+
+import { cn } from '@/lib/utils';
+import FavoriteIcon from '@/public/favorite.svg';
+import FavoriteBorderIcon from '@/public/favorite_border.svg';
 
 interface FavoriteButtonProps {
   isLiked?: boolean;
@@ -9,18 +10,14 @@ interface FavoriteButtonProps {
   onToggle?: () => void;
 }
 
-const FavoriteButton: FC<FavoriteButtonProps> = ({
-  className,
-  isLiked,
-  onToggle,
-}) => (
+const FavoriteButton: FC<FavoriteButtonProps> = ({ className, isLiked, onToggle }) => (
   <button
     className={cn(
-      "absolute right-2 top-2 group/button",
+      'absolute right-2 top-2 group/button',
       {
-        "hidden group-hover:block": !isLiked,
+        'hidden group-hover:block': !isLiked,
       },
-      className
+      className,
     )}
     onClick={(e) => {
       e.stopPropagation(); // Empêche le clic sur le bouton d'ouvrir la page du film

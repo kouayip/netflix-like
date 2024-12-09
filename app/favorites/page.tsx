@@ -1,17 +1,19 @@
-"use client";
+'use client';
 
-import Container from "@/components/Container";
-import MovieList from "@/components/MovieList";
-import { useFavorites } from "@/store/useFavorites";
-import { Movie } from "@/types/movie";
-import { useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
+import React, { useEffect } from 'react';
+
+import { useQueryClient } from '@tanstack/react-query';
+
+import Container from '@/components/Container';
+import MovieList from '@/components/MovieList';
+import { useFavorites } from '@/store/useFavorites';
+import { Movie } from '@/types/movie';
 
 const ITEMS_PER_PAGE = 20; // Nombre de films par page
 
 const EMPTY_MOVIE = {
   page: 1,
-  type: "movie",
+  type: 'movie',
   limit: ITEMS_PER_PAGE,
   total_pages: ITEMS_PER_PAGE,
   total_results: 0,
@@ -25,12 +27,12 @@ const Favorites = () => {
   const getFavorites = (currentPage = 1) => {
     const paginatedFavorites = favorites.slice(
       (currentPage - 1) * ITEMS_PER_PAGE,
-      currentPage * ITEMS_PER_PAGE
+      currentPage * ITEMS_PER_PAGE,
     );
 
     return {
       page: currentPage,
-      type: "movie",
+      type: 'movie',
       limit: ITEMS_PER_PAGE,
       total_pages: ITEMS_PER_PAGE,
       total_results: paginatedFavorites.length,
@@ -39,7 +41,7 @@ const Favorites = () => {
   };
 
   useEffect(() => {
-    queryClient.invalidateQueries({ queryKey: ["movies", "favorites"] });
+    queryClient.invalidateQueries({ queryKey: ['movies', 'favorites'] });
   }, [favorites, queryClient]);
 
   if (!isHydrated) {
@@ -54,9 +56,7 @@ const Favorites = () => {
   if (favorites.length === 0) {
     return (
       <Container>
-        <p className="text-center text-white">
-          {"Aucun favori pour l'instant"}.
-        </p>
+        <p className="text-center text-white">{"Aucun favori pour l'instant"}.</p>
       </Container>
     );
   }
@@ -69,7 +69,7 @@ const Favorites = () => {
           <MovieList
             initialMovies={EMPTY_MOVIE}
             maxPages={1}
-            queryKey={["movies", "favorites"]}
+            queryKey={['movies', 'favorites']}
             fetchMovies={(page) => Promise.resolve(getFavorites(page))}
             enabledFetch={favorites.length > 0}
           />

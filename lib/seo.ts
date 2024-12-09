@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
-import { Robots } from "next/dist/lib/metadata/types/metadata-types";
+import type { Metadata } from 'next';
+import { Robots } from 'next/dist/lib/metadata/types/metadata-types';
 
-const APP_TITLE = "Netflix Like";
+const APP_TITLE = 'Netflix Like';
 const APP_DESCRIPTION = `${APP_TITLE} is a application for film fanatics`;
-const SITE_URL = process.env.SITE_URL || "http://localhost:3000";
+const SITE_URL = process.env.SITE_URL || 'http://localhost:3000';
 
 export function getMetadata({
   title,
@@ -15,7 +15,7 @@ export function getMetadata({
   title?: string;
   description?: string;
   pathname?: string;
-  images?: NonNullable<Metadata["openGraph"]>["images"];
+  images?: NonNullable<Metadata['openGraph']>['images'];
   robots?: null | string | Robots;
 }): Metadata {
   const metaTitle = title ? `${title} | ${APP_TITLE}` : APP_TITLE;
@@ -33,7 +33,7 @@ export function getMetadata({
     title: metaTitle,
     description: metaDescription,
     metadataBase: new URL(SITE_URL as string),
-    creator: "Yves kams",
+    creator: 'Yves kams',
     applicationName: APP_TITLE,
     alternates: {
       canonical: pathname,
@@ -41,8 +41,8 @@ export function getMetadata({
     openGraph: {
       title: metaTitle,
       description: metaDescription,
-      type: "website",
-      locale: "en_US",
+      type: 'website',
+      locale: 'en_US',
       url: pathname,
       siteName: APP_TITLE,
       images: metaImages,
@@ -50,8 +50,8 @@ export function getMetadata({
     twitter: {
       title: metaTitle,
       description: metaDescription,
-      card: "summary_large_image",
-      creator: "@yveskams_",
+      card: 'summary_large_image',
+      creator: '@yveskams_',
       images: metaImages,
     },
     robots,
