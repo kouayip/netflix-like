@@ -8,15 +8,16 @@ import SimilarMovies from '@/components/SimilarMovies';
 import { getMetadata } from '@/lib/seo';
 import { fetchMovieDetails, fetchSimilarMovies } from '@/lib/tmdb';
 import { formatMoney, formatReleaseYear, getImageUrl } from '@/lib/utils';
+import { PageProps } from '@/.next/types/app/layout';
 
 type MovieDetailsProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
-export async function generateMetadata({ params }: MovieDetailsProps): Promise<Metadata> {
-  const { id } = params;
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { id } = await params;
   const { title, poster_path, overview } = await fetchMovieDetails(String(id));
 
   return getMetadata({
@@ -35,7 +36,7 @@ export async function generateMetadata({ params }: MovieDetailsProps): Promise<M
 }
 
 const MovieDetails = async ({ params }: MovieDetailsProps) => {
-  const { id } = params;
+  const { id } = await params;
 
   const [
     { title, poster_path, backdrop_path, release_date, overview, budget, revenue },
