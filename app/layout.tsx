@@ -2,6 +2,7 @@ import { Viewport } from "next";
 import localFont from "next/font/local";
 import Navbar from "@/components/Navbar";
 import ReactQueryProvider from "./providers";
+import { getMetadata } from "@/lib/seo";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -19,21 +20,21 @@ export const viewport: Viewport = {
   themeColor: "#111827",
 };
 
-// export const metadata = getMetadata({
-//   robots: {
-//     index: true,
-//     follow: true,
-//     nocache: true,
-//     googleBot: {
-//       index: true,
-//       follow: true,
-//       noimageindex: true,
-//       "max-video-preview": -1,
-//       "max-image-preview": "large",
-//       "max-snippet": -1,
-//     },
-//   },
-// });
+export const metadata = getMetadata({
+  robots: {
+    index: true,
+    follow: true,
+    nocache: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+});
 
 export default function RootLayout({
   children,

@@ -3,13 +3,12 @@ import { Robots } from "next/dist/lib/metadata/types/metadata-types";
 
 const APP_TITLE = "Netflix Like";
 const APP_DESCRIPTION = `${APP_TITLE} is a application for film fanatics`;
-const SITE_URL = process.env.SITE_URL || "http://localhost:3000";
+// const SITE_URL = process.env.SITE_URL || "http://localhost:3000";
 
 export function getMetadata({
   title,
   description,
   pathname,
-  images,
   robots,
 }: {
   title?: string;
