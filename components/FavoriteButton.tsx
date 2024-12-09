@@ -20,7 +20,7 @@ const FavoriteButton: FC<FavoriteButtonProps> = ({ className, isLiked, onToggle 
       className,
     )}
     onClick={(e) => {
-      e.stopPropagation(); // Empêche le clic sur le bouton d'ouvrir la page du film
+      e.preventDefault(); // Empêche le clic sur le bouton d'ouvrir la page du film
       onToggle?.();
     }}
   >
