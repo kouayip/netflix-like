@@ -5,18 +5,7 @@ import { formatMoney } from "@/utils/formatMoney";
 import SimilarMovies from "@/components/SimilarMovies";
 import { Suspense } from "react";
 import Container from "@/components/Container";
-
-export const getImageUrl = (
-  path?: string | null,
-  size: string = process.env.TMDB_IMAGE_SIZE || "w500"
-) => {
-  const baseUrl =
-    process.env.TMDB_IMAGE_BASE_URL || "https://image.tmdb.org/t/p";
-  if (!path) {
-    return "/placeholder.png"; // Fournissez une image de placeholder locale
-  }
-  return `${baseUrl}/${size}${path}`;
-};
+import { getImageUrl } from "@/utils/getImageUrl";
 
 const MovieDetails = async ({ params }: { params: { id: string } }) => {
   const { id } = await params;
