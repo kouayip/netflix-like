@@ -30,13 +30,13 @@ const MovieCard = forwardRef<HTMLDivElement, MovieCardProps>(
     };
 
     return (
-      <Link href={`/movie/${id}`}>
-        <div
-          className="flex flex-col w-full max-w-72 rounded-lg shadow-black/5 shadow-none cursor-pointer group"
-          ref={ref}
-        >
+      <div
+        className="flex flex-col flex-1 max-w-72 rounded-lg shadow-black/5 shadow-none cursor-pointer group"
+        ref={ref}
+      >
+        <Link className="inline-flex size-full flex-col" href={`/movie/${id}`}>
           {/* Image Section */}
-          <div className="relative flex-1 w-full overflow-hidden rounded-lg">
+          <div className="relative size-full overflow-hidden rounded-lg">
             <Image
               src={getImageUrl(poster_path)}
               alt={title || name}
@@ -54,8 +54,8 @@ const MovieCard = forwardRef<HTMLDivElement, MovieCardProps>(
           <h3 className="mt-2 text-white text-sm leading-[1.125rem] font-normal shadow-text">
             {title || name}
           </h3>
-        </div>
-      </Link>
+        </Link>
+      </div>
     );
   },
 );
