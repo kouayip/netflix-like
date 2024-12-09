@@ -2,7 +2,6 @@ import { Viewport } from "next";
 import localFont from "next/font/local";
 import Navbar from "@/components/Navbar";
 import ReactQueryProvider from "./providers";
-import { getMetadata } from "@/lib/seo";
 import "./globals.css";
 
 const geistSans = localFont({
