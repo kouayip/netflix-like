@@ -5,6 +5,29 @@ import SimilarMovies from "@/components/SimilarMovies";
 import Container from "@/components/Container";
 import { fetchMovieDetails, fetchSimilarMovies } from "@/lib/tmdb";
 import { formatMoney, formatReleaseYear, getImageUrl } from "@/lib/utils";
+import { Metadata } from "next";
+import { getMetadata } from "@/lib/seo";
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { id } = await params;
+  const { title, poster_path, overview } = await fetchMovieDetails(String(id));
+
+  return getMetadata({
+    title: title,
+    description: overview,
+    pathname: `/movie/${id}`,
+    images: [
+      {
+        url: getImageUrl(poster_path),
+        width: 500,
+        height: 750,
+        alt: title,
+      },
+    ],
+  });
+}
 
 const MovieDetails = async ({ params }: PageProps) => {
   const { id } = await params;
