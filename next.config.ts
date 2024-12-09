@@ -1,7 +1,7 @@
-import bundleAnalyzer from "@next/bundle-analyzer";
+import bundleAnalyzer from '@next/bundle-analyzer';
 
 const withBundleAnalyzer = bundleAnalyzer({
-  enabled: process.env.ANALYZE === "true",
+  enabled: process.env.ANALYZE === 'true',
 });
 
 export default withBundleAnalyzer({
@@ -11,9 +11,9 @@ export default withBundleAnalyzer({
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "image.tmdb.org",
-        pathname: "/t/p/**", // Permet les chemins dynamiques
+        protocol: 'https',
+        hostname: 'image.tmdb.org',
+        pathname: '/t/p/**', // Permet les chemins dynamiques
       },
     ],
   },
@@ -21,7 +21,7 @@ export default withBundleAnalyzer({
   webpack(config) {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule: { test?: RegExp }) =>
-      rule.test?.test?.(".svg")
+      rule.test?.test?.('.svg'),
     );
 
     config.module.rules.push(
@@ -36,12 +36,12 @@ export default withBundleAnalyzer({
         test: /\.svg$/i,
         issuer: { not: /\.(css|scss|sass)$/ },
         resourceQuery: { not: /url/ }, // exclude if *.svg?url
-        loader: "@svgr/webpack",
+        loader: '@svgr/webpack',
         options: {
           dimensions: false,
           titleProp: true,
         },
-      }
+      },
     );
 
     // Modify the file loader rule to ignore *.svg, since we have it handled now.

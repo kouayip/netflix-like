@@ -3,15 +3,20 @@ import React, { Suspense } from 'react';
 import { Metadata } from 'next';
 import Image from 'next/image';
 
-import { PageProps } from '@/.next/types/app/page';
 import Container from '@/components/Container';
 import SimilarMovies from '@/components/SimilarMovies';
 import { getMetadata } from '@/lib/seo';
 import { fetchMovieDetails, fetchSimilarMovies } from '@/lib/tmdb';
 import { formatMoney, formatReleaseYear, getImageUrl } from '@/lib/utils';
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { id } = await params;
+type MovieDetailsProps = {
+  params: {
+    id: string;
+  };
+};
+
+export async function generateMetadata({ params }: MovieDetailsProps): Promise<Metadata> {
+  const { id } = params;
   const { title, poster_path, overview } = await fetchMovieDetails(String(id));
 
   return getMetadata({
@@ -29,8 +34,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 }
 
-const MovieDetails = async ({ params }: PageProps) => {
-  const { id } = await params;
+const MovieDetails = async ({ params }: MovieDetailsProps) => {
+  const { id } = params;
 
   const [
     { title, poster_path, backdrop_path, release_date, overview, budget, revenue },

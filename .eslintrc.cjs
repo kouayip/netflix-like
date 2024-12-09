@@ -46,7 +46,7 @@ module.exports = {
     'prettier/prettier': ['error'],
     'arrow-body-style': ['error'],
     '@typescript-eslint/no-explicit-any': 'warn',
-    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    'react-refresh/only-export-components': ['off'],
     'import/order': [
       'error',
       {
