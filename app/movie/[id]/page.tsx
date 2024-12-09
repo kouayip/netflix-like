@@ -6,9 +6,10 @@ import SimilarMovies from "@/components/SimilarMovies";
 import { Suspense } from "react";
 import Container from "@/components/Container";
 import { getImageUrl } from "@/utils/getImageUrl";
+import { PageProps } from "@/.next/types/app/layout";
 
-const MovieDetails = async ({ params }: { params: { id: string } }) => {
-  const { id } = params;
+const MovieDetails = async ({ params }: PageProps) => {
+  const { id } = await params;
 
   const [
     {
