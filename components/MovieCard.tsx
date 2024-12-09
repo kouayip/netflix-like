@@ -1,18 +1,31 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { Movie } from "@/types/movie";
 import { useRouter } from "next/navigation";
 import { getImageUrl } from "@/utils/getImageUrl";
+import FavoriteButton from "./FavoriteButton";
+import { useFavorites } from "@/store/useFavorites";
 
-type MovieCardProps = Movie & {
-  isFavorite: boolean;
-};
+type MovieCardProps = Movie & {};
 
 const MovieCard = forwardRef<HTMLDivElement, MovieCardProps>(
-  ({ id, title, name, poster_path, isFavorite }, ref) => {
+  ({ id, title, name, poster_path }, ref) => {
     const router = useRouter();
+    const { toggleFavorite, isHydrated, isFavorite } = useFavorites();
+    const [favorite, setFavorite] = useState(false);
+
+    useEffect(() => {
+      if (isHydrated) {
+        setFavorite(isFavorite(id));
+      }
+    }, [isHydrated, isFavorite, id]);
+
+    const handleToggleFavorite = () => {
+      toggleFavorite({ id, title, poster_path });
+      setFavorite(!favorite); // Met à jour immédiatement l'état local
+    };
 
     const pageHandler = () => {
       router.push(`/movie/${id}`);
@@ -36,30 +49,17 @@ const MovieCard = forwardRef<HTMLDivElement, MovieCardProps>(
             width={288}
             height={432}
           />
+          {/* Favorite Button */}
+          <FavoriteButton isLiked={favorite} onToggle={handleToggleFavorite} />
         </div>
-
         {/* Text Section */}
         <h3 className="mt-2 text-white text-sm leading-[1.125rem] font-normal shadow-text">
           {title || name}
         </h3>
-
-        {/* Favorite Button */}
-        <button
-          className={`mt-4 w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-300 ${
-            isFavorite
-              ? "bg-red-600 hover:bg-red-500 text-white"
-              : "bg-blue-600 hover:bg-blue-500 text-white"
-          }`}
-          onClick={(e) => {
-            e.stopPropagation(); // Empêche le clic sur le bouton d'ouvrir la page du film
-            // Ajouter ou supprimer des favoris (logique à ajouter ici)
-          }}
-        >
-          {isFavorite ? "Supprimer des Favoris" : "Ajouter aux Favoris"}
-        </button>
       </div>
     );
   }
 );
 
+MovieCard.displayName = "MovieCard";
 export default MovieCard;

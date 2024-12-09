@@ -14,7 +14,7 @@ export interface Movie {
 export interface MovieAPIResponse {
   page: number;
   type: string;
-  limit: 20;
+  limit: number;
   total_pages: number;
   total_results: number;
   results: Movie[];

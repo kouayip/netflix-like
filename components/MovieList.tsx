@@ -10,12 +10,14 @@ interface MovieListProps {
   queryKey: string[];
   fetchMovies: (page: number) => Promise<MovieAPIResponse>;
   maxPages?: number;
+  enabledFetch?: boolean;
 }
 
 const MovieList: FC<MovieListProps> = ({
   initialMovies,
   queryKey,
   fetchMovies,
+  enabledFetch = false,
   maxPages = 3,
 }) => {
   const observer = useRef<IntersectionObserver | null>(null);
@@ -38,7 +40,7 @@ const MovieList: FC<MovieListProps> = ({
       pages: [initialMovies],
       pageParams: [1],
     },
-    enabled: false,
+    enabled: enabledFetch,
   });
 
   const isMaxPages = useCallback(
@@ -72,7 +74,6 @@ const MovieList: FC<MovieListProps> = ({
     <div className="grid w-full lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-2 gap-4 justify-items-center mb-0">
       {allMovies.map((movie, index) => (
         <MovieCard
-          isFavorite={false}
           {...movie}
           key={movie.id}
           ref={index === allMovies.length - 1 ? lastElementRef : null}
