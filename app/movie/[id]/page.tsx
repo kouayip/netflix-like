@@ -84,7 +84,7 @@ const MovieDetails = async ({ params }: PageProps) => {
       </div>
       {/* Films similaires */}
       <Container>
-        <div className="pt-6 lg:pt-12">
+        <div className="pt-6 lg:pt-12 w-full">
           <h2 className="text-2xl font-bold mb-6 text-white">
             Films similaires
           </h2>

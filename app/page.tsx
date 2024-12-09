@@ -24,7 +24,7 @@ const HomePage = async ({
 
   return (
     <Container>
-      <div className="flex flex-col space-y-8">
+      <div className="flex flex-col w-full space-y-8">
         <Suspense>
           <SearchBar />
         </Suspense>
